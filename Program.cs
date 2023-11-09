@@ -40,30 +40,104 @@ namespace LalaDog
                 }
 
                 // 1 - Calculo de medicação
+                /*
+                    Solicitar o peso do animal, informar a dosagem por kg do medicamento 
+                    e ao final informar a dose correta.
+                */
+
                 if (opcao == 1)
                 {
-                    Console.WriteLine("-------CALCULO DE MEDICACAO------");
+                    Console.WriteLine("-----------CALCULO DE MEDICACAO----------");
+
+                    Console.WriteLine("Qual o peso do animal?");
+                    decimal peso_animal = Convert.ToDecimal(Console.ReadLine());
+
+                    Console.WriteLine("Qual a dosagem por KG da medicação?");
+                    decimal dosagem_kg = Convert.ToDecimal(Console.ReadLine());
+
+                    Console.WriteLine($"Para um animal de {peso_animal}kg e uma medicação de {dosagem_kg} \n");
+
+
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"A dosagem correta é de {peso_animal * dosagem_kg}");
+                    Console.ForegroundColor = ConsoleColor.White;
+
+                    // Volta para o menu
+                    opcao = 0;
                     Console.ReadKey();
                 }
 
                 // 2 - Calculo de custo do banho
+                /*
+                    Solicitar o porte do animal (pequeno, medio, grande)
+                    Solicitar o adicional de extras (parasitas, shampoo, aparar)
+                    
+                    Preços:
+                    Cada extra adiciona R$20
+                    p - 80, m - 100, g - 120
+                */
+
                 if (opcao == 2)
                 {
-                    Console.WriteLine("----------CUSTO DE BANHO---------");
+                    Console.WriteLine("-------------CUSTO DE BANHO------------");
+
+                    Console.WriteLine("Qual o porte do animal (p, m, g)?");
+                    string porte_animal = Console.ReadLine();
+
+                    bool extraParasita = false;
+                    bool extraShampoo = false;
+                    bool extraAparar = false;
+                    string opcoesExtras = "";
+
+                    while (opcoesExtras != "4")
+                    {
+                        Console.WriteLine("Deseja adicionar algum extra?");
+                        // Faz um TESTE TERNÁRIO para saber se um item está marcado 
+                        Console.WriteLine($"[{ (extraParasita ? "X" : " ") }] 1 - Remoção de parasitas");
+                        Console.WriteLine($"[{ (extraShampoo ? "X" : " ") }] 2 - Shampoo Importado");
+                        Console.WriteLine($"[{ (extraAparar ? "X" : " ") }] 3 - Aparar de pelos");
+                        Console.WriteLine($"4 - Sair");
+
+                        opcoesExtras = Console.ReadLine();
+
+                        if (opcoesExtras == "1") extraParasita = !extraParasita;
+                        if (opcoesExtras == "2") extraShampoo = !extraShampoo;
+                        if (opcoesExtras == "3") extraAparar = !extraAparar;
+
+                        Console.Clear();
+                    }
+
+                    decimal total = 0;
+
+                    // Soma o valor do banho de acordo com o porte
+                    if (porte_animal == "p") total = 80;
+                    else if (porte_animal == "m") total = 100;
+                    else if (porte_animal == "g") total = 120;
+
+                    // Verifica se adicionou os extras e soma ao total
+                    total += extraParasita ? 20 : 0;
+                    total += extraShampoo ? 20 : 0;
+                    total += extraAparar ? 20 : 0;
+
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"O valor total do banho é de: {total}");
+                    Console.ForegroundColor = ConsoleColor.White;
+
+                    opcao = 0;
                     Console.ReadKey();
                 }
 
                 // 3 - Calculo alimentação
                 if (opcao == 3)
                 {
-                    Console.WriteLine("-------CALCULO DE ALIMENTAÇÃO------");
+                    Console.WriteLine("----------CALCULO DE ALIMENTAÇÃO---------");
                     Console.ReadKey();
                 }
 
                 // Mostra o menu de opções
                 if (opcao == 0)
                 {
-                    Console.WriteLine("----------------MENU----------------");
+                    Console.WriteLine("-------------------MENU-------------------");
                     Console.WriteLine("1 - Calculo de medicação");
                     Console.WriteLine("2 - Calculo de custo do banho");
                     Console.WriteLine("3 - Calculo de alimentação");
