@@ -128,9 +128,53 @@ namespace LalaDog
                 }
 
                 // 3 - Calculo alimentação
+                /*
+                    Pergunta quantos pets existem no petshop, quantos kg de ração
+                    a quantidade de dias para verificar a ração.
+                    Cada pet consome 100g por dia.
+
+                    Ao final mostrar se precisa ou não comprar mais ração.
+                */
                 if (opcao == 3)
                 {
                     Console.WriteLine("----------CALCULO DE ALIMENTAÇÃO---------");
+
+                    Console.WriteLine("Quantos animais estão no petshop?");
+                    int quantidade_animais = Convert.ToInt32(Console.ReadLine());
+
+                    Console.WriteLine("Qual a quantidade de alimento está disponível (em kg)?");
+                    decimal alimento_disponivel = Convert.ToDecimal(Console.ReadLine());
+
+                    Console.WriteLine("Qual a quantidade de dias deseja verificar?");
+                    int quantidade_dias = Convert.ToInt32(Console.ReadLine());
+
+                    // Calculo em gramas do consumo de alimento no periodo
+                    decimal consumo_total = quantidade_animais * quantidade_dias * 100m;
+
+                    // Converte a quantidade de alimentos para gramas
+                    alimento_disponivel *= 1000;
+
+                    
+                    if (consumo_total > alimento_disponivel)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Não existe alimento suficiente.");
+                        Console.WriteLine($"Faltariam {consumo_total - alimento_disponivel}g ou {(consumo_total - alimento_disponivel) / 1000}kg");
+                    }
+                    else if (consumo_total < alimento_disponivel)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("Os alimentos são suficientes.");
+                        Console.WriteLine($"Sobram {alimento_disponivel - consumo_total}g");
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine("A quantidade de alimento é exatamente a necessária ao consumo.");
+                        Console.WriteLine("Favor comprar mais.");
+                    }
+
+                    opcao = 0;
                     Console.ReadKey();
                 }
 
